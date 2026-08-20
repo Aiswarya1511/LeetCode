@@ -1,26 +1,34 @@
 class Solution {
-    public String countAndSay(int n) {
-        String result = "1";
-        for (int i = 1; i < n; i++) {
-            result = describe(result);
-        }
-        return result;
-    }
-
-    private String describe(String s) {
+    public String RLE(String sequence) {
         StringBuilder sb = new StringBuilder();
-        int count = 1;
-
-        for (int i = 1; i < s.length(); i++) {
-            if (s.charAt(i) == s.charAt(i - 1)) {
+        char[] nums = sequence.toCharArray();
+        char curr = nums[0];
+        int count = 0;
+        
+        
+        for (char num : nums) {
+            if (num == curr)
                 count++;
-            } else {
-                sb.append(count).append(s.charAt(i - 1));
+            else {
+                sb.append(count);
+                sb.append(curr);
+                curr = num;
                 count = 1;
             }
         }
-
-        sb.append(count).append(s.charAt(s.length() - 1));
+        
+        
+        sb.append(count);
+        sb.append(curr);
         return sb.toString();
+    }
+    
+    
+    public String countAndSay(int n) {
+        if (n == 1)
+            return "1";
+        
+        
+        return RLE(countAndSay(n - 1));
     }
 }
